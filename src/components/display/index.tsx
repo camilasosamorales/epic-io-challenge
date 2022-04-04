@@ -32,7 +32,14 @@ const Display = () => {
         height="400px"
         ref={videoRef}
         src={currentVideo.video.source || ''}
+        preload="metadata"
         controls
+        onPause={() => {
+          dispatch(setPlayPauseVideo(false));
+        }}
+        onPlay={() => {
+          dispatch(setPlayPauseVideo(true));
+        }}
         onEnded={() => {
           dispatch(setPlayPauseVideo(false));
         }}

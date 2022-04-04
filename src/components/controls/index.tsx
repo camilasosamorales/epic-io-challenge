@@ -9,7 +9,7 @@ import Categories from '../categories';
 import { Category } from '../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlayPauseVideo, setVolume } from '../../store/actions';
-import { playPauseSelector, volumeSelector } from '../../store/selectors';
+import { playPauseSelector, videoSelector, volumeSelector } from '../../store/selectors';
 
 interface Props {
   categories?: Array<Category>;
@@ -18,6 +18,7 @@ interface Props {
 const Controls: React.FC<Props> = ({ categories }) => {
   const [videoPlay, setVideoPlay] = useState(false);
   const [volume, setVolumeVideo] = useState(50);
+  const currentVideo = useSelector(videoSelector);
   const currentVideoState = useSelector(playPauseSelector);
   const currentVolume = useSelector(volumeSelector);
   const dispatch = useDispatch();
@@ -29,6 +30,10 @@ const Controls: React.FC<Props> = ({ categories }) => {
   useEffect(() => {
     setVolumeVideo(currentVolume);
   }, [currentVolume]);
+
+  // useEffect(() => {
+  //   console.log('change video', !currentVideo.video.source);
+  // }, [currentVideo]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     const volumeValue = newValue as number;
@@ -48,6 +53,7 @@ const Controls: React.FC<Props> = ({ categories }) => {
       <Box sx={{ display: 'flex', flexDirection: 'row' }}>
         <Button
           variant="contained"
+          disabled={!currentVideo.video.source}
           endIcon={!videoPlay ? <PlayArrowIcon /> : <PauseIcon />}
           onClick={togglePlayPauseButton}
         >
