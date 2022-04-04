@@ -31,10 +31,6 @@ const Controls: React.FC<Props> = ({ categories }) => {
     setVolumeVideo(currentVolume);
   }, [currentVolume]);
 
-  // useEffect(() => {
-  //   console.log('change video', !currentVideo.video.source);
-  // }, [currentVideo]);
-
   const handleChange = (event: Event, newValue: number | number[]) => {
     const volumeValue = newValue as number;
     setVolumeVideo(volumeValue);
